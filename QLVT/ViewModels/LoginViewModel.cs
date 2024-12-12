@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace QLVT.Models
+namespace QLVT.ViewModels
 {
     public class LoginViewModel
     {
@@ -10,6 +10,7 @@ namespace QLVT.Models
         public string Username { get; set; }
         [Required]
         [DisplayName("Mật khẩu")]
+        [DataType("Password")]
         public string Password { get; set; }
     }
 }
