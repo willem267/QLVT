@@ -1,0 +1,40 @@
+﻿@model QLVT.Models.LoaiVt
+
+@{
+    ViewData["Title"] = "XoaLoaiVT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Bạn có chắc là muốn xóa không</h1>
+
+<br />
+
+<div>
+    <h4>LoaiVt</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Mã loại
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaLoai)
+        </dd>
+        <dt class="col-sm-2">
+            Tên loại
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenLoai)
+        </dd>
+        <dt class="col-sm-2">
+            Mô tả
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MoTa)
+        </dd>
+    </dl>
+
+    <form asp-action="XoaLoaiVT" method="post" >
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-primary">Trở về danh sách</a>
+    </form>
+</div>
