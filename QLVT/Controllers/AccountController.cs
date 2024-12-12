@@ -7,8 +7,10 @@ namespace QLVT.Controllers
 {
     public class AccountController : Controller
     {
-       
-        private QlvtContext _context = new QlvtContext();
+
+        private readonly QlvtContext _context;
+        public AccountController(QlvtContext context)
+        { _context = context; }
         public IActionResult Login() 
         { 
             return View(); 
@@ -24,7 +26,9 @@ namespace QLVT.Controllers
                     HttpContext.Session.SetString("Username", user.TenDn);
                     HttpContext.Session.SetString("Password", user.Mk);
                     HttpContext.Session.SetString("Quyen", user.MaQ);
+                    
                     HttpContext.Session.SetString("Nhanvien", user.MaNv);
+                    
                     return RedirectToAction("Index", "Home"); 
                 }
                 ModelState.AddModelError(string.Empty, "Tên đăng nhập hoặc mật khẩu không chính xác."); 
@@ -32,9 +36,11 @@ namespace QLVT.Controllers
             return View(model); 
         }
 
+        [HttpPost]
         public IActionResult Logout() 
         { 
-            HttpContext.Session.Remove("Username"); return RedirectToAction("Login"); 
+            HttpContext.Session.Remove("Username");
+            return RedirectToAction("Login"); 
         }
     }
 }

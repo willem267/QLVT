@@ -1,13 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using QLVT.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<QlvtContext>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")
-    ));
+builder.Services.AddDbContext<QlvtContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+    
 builder.Services.AddDistributedMemoryCache(); // Them cache cho session
 builder.Services.AddSession(options =>
 {
