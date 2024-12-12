@@ -35,5 +35,5 @@ namespace QLVT.Controllers
         { 
             HttpContext.Session.Remove("Username"); return RedirectToAction("Login"); 
         }
-    }//sua gi do
+    }//sua gi do thêm nua
 }
