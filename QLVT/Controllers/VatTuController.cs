@@ -40,27 +40,27 @@ namespace QLVT.Controllers
         [HttpPost]
         public IActionResult Them(VatTu vatTu)
         {
-           
-            //kiểm tra mã vật tư tồn tại hay không
+            // Kiểm tra mã vật tư tồn tại hay không
             var existingMaVt = _context.VatTus.FirstOrDefault(vt => vt.MaVt == vatTu.MaVt);
             if (existingMaVt != null)
             {
                 ModelState.AddModelError("MaVt", "Mã vật tư đã tồn tại. Vui lòng nhập mã khác.");
             }
 
+            // Kiểm tra mã vật tư chỉ chứa chữ cái tiếng Anh và số
             if (!System.Text.RegularExpressions.Regex.IsMatch(vatTu.MaVt, @"^[a-zA-Z0-9]+$"))
             {
                 ModelState.AddModelError("MaVt", "Mã vật tư chỉ được chứa chữ cái tiếng Anh và số, không chứa dấu hoặc ký tự đặc biệt.");
             }
 
+            // Loại bỏ khoảng trắng và kiểm tra tên vật tư đã tồn tại (không phân biệt chữ hoa chữ thường)
+            var noSpacesTenVt = vatTu.TenVt.Replace(" ", "").ToLower();
+            var existingTenVt = _context.VatTus.FirstOrDefault(vt => vt.TenVt.Replace(" ", "").ToLower() == noSpacesTenVt);
 
-            // Kiểm tra nếu tên vật tư đã tồn tại (không phân biệt chữ hoa chữ thường)
-            var existingtenvt = _context.VatTus.FirstOrDefault(vt => vt.TenVt.ToLower() == vatTu.TenVt.ToLower());
-            if (existingtenvt != null)
+            if (existingTenVt != null)
             {
                 ModelState.AddModelError("TenVt", "Tên vật tư đã tồn tại. Vui lòng nhập tên khác.");
             }
-
 
             // Kiểm tra nếu số lượng tồn không âm
             if (vatTu.SoLuongTon < 0)
@@ -83,12 +83,12 @@ namespace QLVT.Controllers
             // Kiểm tra nếu số lượng tồn lớn hơn 0 và trạng thái là "TT00" và mã kho là "K00"
             if (vatTu.SoLuongTon > 0 && (vatTu.MaTt == "TT00" || vatTu.MaKho == "K00"))
             {
-                ModelState.AddModelError("SoLuongTon", "Không thể thêm vật tư vì có số lượng tồn có. không thể thêm hết ở trạng thái và kho");
+                ModelState.AddModelError("SoLuongTon", "Không thể thêm vật tư vì có số lượng tồn có. Không thể thêm hết ở trạng thái và kho.");
             }
 
+            // Nếu có lỗi, truyền lại danh sách lựa chọn cho các ComboBox
             if (!ModelState.IsValid)
             {
-                // Nếu có lỗi, truyền lại danh sách lựa chọn cho các ComboBox
                 ViewData["MaLoaiOptions"] = new SelectList(_context.LoaiVts, "MaLoai", "TenLoai", vatTu.MaLoai);
                 ViewData["MaKhoOptions"] = new SelectList(_context.Khos, "MaKho", "TenKho", vatTu.MaKho);
                 ViewData["MaTrangThaiOptions"] = new SelectList(_context.TrangThais, "MaTt", "TenTrangThai", vatTu.MaTt);
@@ -98,11 +98,13 @@ namespace QLVT.Controllers
             }
             else
             {
+                // Thêm vật tư vào cơ sở dữ liệu nếu không có lỗi
                 _context.VatTus.Add(vatTu);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
         }
+
         public IActionResult XoaVT(string id)
         {
             var vt = _context.VatTus.Find(id);
@@ -174,9 +176,9 @@ namespace QLVT.Controllers
         [HttpPost]
         public IActionResult SuaVTPost(VatTu vatTu)
         {
-            // Kiểm tra tên vật tư có trùng hay không, ngoại trừ vật tư đang sửa
-            var existingtenvt = _context.VatTus.FirstOrDefault(vt => vt.TenVt.ToLower() == vatTu.TenVt.ToLower()
-                                                             && vt.MaVt != vatTu.MaVt);
+            // Loại bỏ khoảng trắng và kiểm tra tên vật tư có trùng hay không, ngoại trừ vật tư đang sửa
+            var noSpacesTenVt = vatTu.TenVt.Replace(" ", "").ToLower();
+            var existingtenvt = _context.VatTus.FirstOrDefault(vt => vt.TenVt.Replace(" ", "").ToLower() == noSpacesTenVt && vt.MaVt != vatTu.MaVt);
             if (existingtenvt != null)
             {
                 ModelState.AddModelError("TenVt", "Tên vật tư đã tồn tại. Vui lòng nhập tên khác.");
@@ -219,6 +221,7 @@ namespace QLVT.Controllers
 
             return RedirectToAction("Index");
         }
+
 
 
         public IActionResult ChiTietVT(string id)

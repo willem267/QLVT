@@ -40,9 +40,11 @@ namespace QLVT.Controllers
                 ModelState.AddModelError("MaLoai", "Mã loại đã tồn tại. Vui lòng nhập mã khác.");
             }
 
-            // Kiểm tra nếu tên loại đã tồn tại (không phân biệt hoa thường)
-            var existingTenLoai = _context.LoaiVts
-                .FirstOrDefault(vt => vt.TenLoai.ToLower() == lvt.TenLoai.ToLower());
+            // Loại bỏ tất cả các khoảng trắng trong tên loại
+            var noSpacesTenLoai = lvt.TenLoai.Replace(" ", "");
+
+            // Kiểm tra tên loại đã tồn tại (không phân biệt hoa thường)
+            var existingTenLoai = _context.LoaiVts.FirstOrDefault(vt => vt.TenLoai.Replace(" ", "").ToLower() == noSpacesTenLoai.ToLower());
 
             if (existingTenLoai != null)
             {
@@ -63,6 +65,7 @@ namespace QLVT.Controllers
             // Chuyển hướng về trang danh sách
             return RedirectToAction("Index");
         }
+
 
         public IActionResult XoaLoaiVT(string id)
         {
@@ -129,7 +132,13 @@ namespace QLVT.Controllers
         [HttpPost]
         public IActionResult SuaLoaiVT(LoaiVt lvt)
         {
-            var isDuplicate = _context.LoaiVts.Any(x => x.TenLoai == lvt.TenLoai && x.MaLoai != lvt.MaLoai);
+            // Loại bỏ khoảng trắng và chuyển tên loại thành chữ thường để kiểm tra trùng
+            var noSpacesTenLoai = lvt.TenLoai.Replace(" ", "").ToLower();
+
+            // Kiểm tra xem tên loại có bị trùng không (so với các loại vật tư khác, không tính loại vật tư hiện tại)
+            var isDuplicate = _context.LoaiVts
+                .Any(x => x.TenLoai.Replace(" ", "").ToLower() == noSpacesTenLoai && x.MaLoai != lvt.MaLoai);
+
             if (isDuplicate)
             {
                 ModelState.AddModelError("TenLoai", "Tên loại vật tư đã tồn tại, vui lòng nhập tên khác.");
@@ -144,8 +153,9 @@ namespace QLVT.Controllers
             // Cập nhật dữ liệu nếu không trùng
             _context.Update(lvt);
             _context.SaveChanges();
+
             return RedirectToAction("Index");
-        
         }
+
     }
 }

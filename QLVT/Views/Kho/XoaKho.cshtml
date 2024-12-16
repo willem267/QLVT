@@ -1,0 +1,39 @@
+﻿@model QLVT.Models.Kho
+
+@{
+    ViewData["Title"] = "Xóa Kho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/css/Kho.css" rel="stylesheet" />
+}
+
+<div class="delete-container">
+    <div class="delete-title">Xóa Kho</div>
+
+    <div class="delete-warning">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Bạn có chắc chắn muốn xóa kho này? Hành động này không thể hoàn tác!
+    </div>
+
+    <div class="delete-details">
+        <dl class="row">
+            <dt class="col-sm-4">Mã Kho:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MaKho)</dd>
+
+            <dt class="col-sm-4">Tên Kho:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.TenKho)</dd>
+
+            <dt class="col-sm-4">Địa Chỉ:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.DiaChi)</dd>
+        </dl>
+    </div>
+
+    <form asp-action="XoaKho" method="post">
+        <div class="button-group">
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-primary">Trở về danh sách</a>
+        </div>
+    </form>
+</div>

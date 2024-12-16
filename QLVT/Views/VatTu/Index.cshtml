@@ -5,69 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    /* Căn chỉnh các nút nằm trên cùng một hàng */
-    .btn-group {
-        display: flex; /* Hiển thị các nút trên cùng một hàng */
-        gap: 8px; /* Khoảng cách giữa các nút */
-        justify-content: flex-start; /* Căn nút về bên trái */
-        align-items: center; /* Căn chỉnh theo chiều dọc */
-    }
-
-    /* Tùy chỉnh chung cho các nút */
-    .btn {
-        padding: 8px 16px; /* Điều chỉnh kích thước nút */
-        border-radius: 8px; /* Bo góc nhẹ */
-        font-size: 14px;
-        text-align: center;
-        white-space: nowrap; /* Đảm bảo chữ không bị xuống dòng */
-    }
-
-    /* Màu sắc cho từng loại nút */
-    .btn-danger {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .btn-info {
-        background-color: #17a2b8;
-        color: white;
-    }
-
-    .btn-warning {
-        background-color: #ffc107;
-        color: black;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        color: white;
-    }
-
-    /* Bo góc và đổ bóng cho bảng */
-    table {
-        border-collapse: collapse;
-        background-color: #fff;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 12px;
-        overflow: hidden;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #343a40;
-        color: white;
-    }
-
-    tr:hover {
-        background-color: #f5f5f5;
-    }
-</style>
+@section Styles {
+    <link href="~/css/VatTu.css" rel="stylesheet" />
+}
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -118,10 +58,10 @@
                         <td>@Html.DisplayFor(modelItem => item.MaTt)</td>
                         <td>@Html.DisplayFor(modelItem => item.MaKho)</td>
                         <td>
-                            <div class="btn-group">
+                            <div >
                                 <a asp-action="XoaVT" asp-route-id="@item.MaVt" class="btn btn-danger btn-sm">Xóa</a>
-                                <a asp-action="ChiTietVT" asp-route-id="@item.MaVt" class="btn btn-info btn-sm">Chi tiết</a>
                                 <a asp-action="SuaVT" asp-route-id="@item.MaVt" class="btn btn-warning btn-sm">Sửa</a>
+                                <a asp-action="ChiTietVT" asp-route-id="@item.MaVt" class="btn btn-info btn-sm">Chi tiết</a>
                                 <a asp-action="PBSuDung" asp-route-id="@item.MaVt" class="btn btn-secondary btn-sm">Phòng ban sử dụng</a>
                             </div>
                         </td>

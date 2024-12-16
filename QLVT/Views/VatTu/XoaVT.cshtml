@@ -5,81 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .delete-container {
-        max-width: 600px;
-        margin: 50px auto;
-        background: #fff5f5;
-        padding: 30px;
-        border: 1px solid #f8d7da;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-
-    .delete-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: #721c24;
-        margin-bottom: 20px;
-    }
-
-    .delete-warning {
-        font-size: 16px;
-        color: #721c24;
-        margin-bottom: 20px;
-        background-color: #f8d7da;
-        padding: 10px;
-        border-radius: 5px;
-    }
-
-    .delete-details dl {
-        text-align: left;
-        margin-bottom: 20px;
-    }
-
-    .delete-details dt {
-        font-weight: bold;
-        color: #495057;
-    }
-
-    .delete-details dd {
-        margin-left: 0;
-        color: #343a40;
-    }
-
-    .button-group {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .btn-danger {
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 16px;
-        background-color: #dc3545;
-        color: white;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-            transform: scale(1.05);
-        }
-
-    .btn-primary {
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 16px;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-</style>
+@section Styles {
+    <link href="~/css/VatTu.css" rel="stylesheet" />
+}
 
 <div class="delete-container">
     <div class="delete-title">Xóa Vật Tư</div>
