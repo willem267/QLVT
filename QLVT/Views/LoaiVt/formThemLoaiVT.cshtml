@@ -1,49 +1,112 @@
 ﻿@model QLVT.Models.LoaiVt
 
 @{
-    ViewData["Title"] = "formThemLoaiVT";
+    ViewData["Title"] = "Thêm Loại Vật Tư";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Thêm loại vật tư</h1>
+<style>
+    .form-container {
+        max-width: 600px;
+        margin: 30px auto;
+        background: #f9f9f9;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Them">
-            <!-- Hiển thị thông báo lỗi nếu có -->
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    .form-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
 
-            <div class="form-group">
-                <label asp-for="MaLoai" class="control-label">Mã loại</label>
-                <input asp-for="MaLoai" class="form-control" />
-                <span asp-validation-for="MaLoai" class="text-danger"></span> <!-- Thông báo lỗi Mã loại -->
-            </div>
+    .form-group label {
+        font-weight: bold;
+        color: #555;
+    }
 
-            <div class="form-group">
-                <label asp-for="TenLoai" class="control-label">Tên loại</label>
-                <input asp-for="TenLoai" class="form-control" />
-                <span asp-validation-for="TenLoai" class="text-danger"></span> <!-- Thông báo lỗi Tên loại -->
-            </div>
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        transition: border-color 0.3s;
+    }
 
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label">Mô tả</label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span> <!-- Thông báo lỗi Mô tả -->
-            </div>
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
 
-            <br />
-            <div class="form-group" style="display: flex; gap: 200px;">
-                <input type="submit" value="Thêm" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-primary">Trở về danh sách</a>
-            </div>
-        </form>
-    </div>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 8px;
+        padding: 10px 20px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        border-radius: 8px;
+        padding: 10px 20px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: scale(1.05);
+        }
+
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .text-danger {
+        font-size: 14px;
+        font-style: italic;
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-title">Thêm Loại Vật Tư</div>
+    <form asp-action="Them">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-group">
+            <label asp-for="MaLoai" class="control-label"></label>
+            <input asp-for="MaLoai" class="form-control" placeholder="Nhập mã loại" />
+            <span asp-validation-for="MaLoai" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TenLoai" class="control-label"></label>
+            <input asp-for="TenLoai" class="form-control" placeholder="Nhập tên loại" />
+            <span asp-validation-for="TenLoai" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MoTa" class="control-label"></label>
+            <textarea asp-for="MoTa" class="form-control" placeholder="Nhập mô tả" rows="3"></textarea>
+            <span asp-validation-for="MoTa" class="text-danger"></span>
+        </div>
+
+        <br />
+        <div class="button-group">
+            <input type="submit" value="Thêm" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Trở về danh sách</a>
+        </div>
+    </form>
 </div>
 
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

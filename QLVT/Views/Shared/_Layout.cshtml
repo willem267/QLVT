@@ -35,14 +35,6 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @{
-                
-                string user = Context.Session.GetString("Nhanvien");
-
-            }
-            <h1>
-                Xin chào @user
-            </h1>
             @RenderBody()
         </main>
     </div>

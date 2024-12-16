@@ -1,7 +1,7 @@
-﻿@model QLVT.Models.LoaiVt
+﻿@model QLVT.Models.VatTu
 
 @{
-    ViewData["Title"] = "Xóa Loại Vật Tư";
+    ViewData["Title"] = "Xóa Vật Tư";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -63,10 +63,10 @@
         transition: background-color 0.3s, transform 0.2s;
     }
 
-    .btn-danger:hover {
-        background-color: #c82333;
-        transform: scale(1.05);
-    }
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
 
     .btn-primary {
         padding: 10px 20px;
@@ -75,34 +75,43 @@
         transition: background-color 0.3s, transform 0.2s;
     }
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-    }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
 </style>
 
 <div class="delete-container">
-    <div class="delete-title">Xóa Loại Vật Tư</div>
+    <div class="delete-title">Xóa Vật Tư</div>
 
     <div class="delete-warning">
         <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-        Bạn có chắc chắn muốn xóa loại vật tư này? Hành động này không thể hoàn tác!
+        Bạn có chắc chắn muốn xóa vật tư này? Hành động này không thể hoàn tác!
     </div>
 
     <div class="delete-details">
         <dl class="row">
-            <dt class="col-sm-4">Mã Loại:</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.MaLoai)</dd>
+            <dt class="col-sm-4">Mã Vật Tư:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MaVt)</dd>
 
-            <dt class="col-sm-4">Tên Loại:</dt>
-            <dd class="col-sm-8">@Html.DisplayFor(model => model.TenLoai)</dd>
+            <dt class="col-sm-4">Tên Vật Tư:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.TenVt)</dd>
+
+            <dt class="col-sm-4">Đơn Vị Tính:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.DonViTinh)</dd>
+
+            <dt class="col-sm-4">Số Lượng Tồn:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.SoLuongTon)</dd>
 
             <dt class="col-sm-4">Mô Tả:</dt>
             <dd class="col-sm-8">@Html.DisplayFor(model => model.MoTa)</dd>
+
+            <dt class="col-sm-4">Đơn Giá:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.DonGia)</dd>
         </dl>
     </div>
 
-    <form asp-action="XoaLoaiVT" method="post">
+    <form asp-action="XoaVT" method="post">
         <div class="button-group">
             <input type="submit" value="Xóa" class="btn btn-danger" />
             <a asp-action="Index" class="btn btn-primary">Trở về danh sách</a>

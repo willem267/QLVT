@@ -1,0 +1,57 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "Chi Tiết Vật Tư";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Thông Tin Vật Tư</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Mã Vật Tư</th>
+                    <td>@Model.MaVt</td>
+                </tr>
+                <tr>
+                    <th>Tên Vật Tư</th>
+                    <td>@Model.TenVt</td>
+                </tr>
+                <tr>
+                    <th>Đơn Vị Tính</th>
+                    <td>@Model.DonViTinh</td>
+                </tr>
+                <tr>
+                    <th>Số Lượng Tồn</th>
+                    <td>@Model.SoLuongTon</td>
+                </tr>
+                <tr>
+                    <th>Mô Tả</th>
+                    <td>@Model.MoTa</td>
+                </tr>
+                <tr>
+                    <th>Đơn Giá</th>
+                    <td>@Model.DonGia.ToString("N0")</td>
+                </tr>
+                <tr>
+                    <th>Loại</th>
+                    <td>@Model.Loai</td>
+                </tr>
+                <tr>
+                    <th>Trạng Thái</th>
+                    <td>@Model.TrangThai</td>
+                </tr>
+                <tr>
+                    <th>Kho</th>
+                    <td>@Model.Kho</td>
+                </tr>
+            </table>
+            <div class="text-center">
+                <a asp-action="Index" class="btn btn-primary btn-lg">Quay Lại Danh Sách</a>
+            </div>
+        </div>
+    </div>
+</div>

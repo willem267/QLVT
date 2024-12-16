@@ -1,0 +1,39 @@
+﻿@model IEnumerable<QLVT.Models.SuDung>
+
+@{
+    ViewData["Title"] = "Danh Sách Phòng Ban Sử Dụng Vật Tư";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4" style="color: #007bff;">Danh Sách Phòng Ban Sử Dụng Vật Tư</h2>
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Phòng Ban</th>
+                    <th>Vật Tư</th>
+                    <th>Số Lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaPbNavigation.TenPb</td> <!-- Tên phòng ban -->
+                        <td>@item.MaVtNavigation.TenVt</td> <!-- Tên vật tư -->
+                        <td>@item.SoLuong</td> <!-- Số lượng -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Nút trở về -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" class="btn btn-primary btn-lg">
+            <i class="fa fa-arrow-left"></i> Trở về danh sách
+        </a>
+    </div>
+</div>

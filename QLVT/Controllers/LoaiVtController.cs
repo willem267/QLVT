@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QLVT.Models;
+using System.Text.RegularExpressions;
 
 namespace QLVT.Controllers
 {
@@ -23,16 +24,25 @@ namespace QLVT.Controllers
         [HttpPost]
         public IActionResult Them(LoaiVt lvt)
         {
-            var existingMaLoai = _context.LoaiVts.FirstOrDefault(vt => vt.MaLoai == lvt.MaLoai);
+            // Kiểm tra mã chỉ chứa chữ cái tiếng Anh và số
+            if (!System.Text.RegularExpressions.Regex.IsMatch(lvt.MaLoai, @"^[a-zA-Z0-9]+$"))
+            {
+                ModelState.AddModelError("MaLoai", "Mã chỉ được chứa chữ cái tiếng Anh và số.");
+            }
+
+            // Kiểm tra mã loại đã tồn tại (không phân biệt hoa thường)
+            var existingMaLoai = _context.LoaiVts
+                .FirstOrDefault(vt => vt.MaLoai.ToLower() == lvt.MaLoai.ToLower());
 
             if (existingMaLoai != null)
             {
                 // Nếu mã loại trùng, thêm lỗi vào ModelState
-                ModelState.AddModelError("MaLoai", "Mã vật tư đã tồn tại. Vui lòng nhập mã khác.");
+                ModelState.AddModelError("MaLoai", "Mã loại đã tồn tại. Vui lòng nhập mã khác.");
             }
 
-            // Kiểm tra nếu tên loại đã tồn tại
-            var existingTenLoai = _context.LoaiVts.FirstOrDefault(vt => vt.TenLoai == lvt.TenLoai);
+            // Kiểm tra nếu tên loại đã tồn tại (không phân biệt hoa thường)
+            var existingTenLoai = _context.LoaiVts
+                .FirstOrDefault(vt => vt.TenLoai.ToLower() == lvt.TenLoai.ToLower());
 
             if (existingTenLoai != null)
             {
@@ -46,7 +56,7 @@ namespace QLVT.Controllers
                 return View("formThemLoaiVT", lvt);  // Trả lại view và giữ dữ liệu đã nhập
             }
 
-            // Nếu không trùng mã, thêm loại vật tư mới vào cơ sở dữ liệu
+            // Nếu không trùng mã và hợp lệ, thêm loại vật tư mới vào cơ sở dữ liệu
             _context.LoaiVts.Add(lvt);
             _context.SaveChanges();
 
@@ -54,28 +64,60 @@ namespace QLVT.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult XoaLoaiVT(String id)
+        public IActionResult XoaLoaiVT(string id)
         {
             var lvt = _context.LoaiVts.Find(id);
-            return View(lvt);
+
+            if (lvt == null)
+            {
+                // Nếu không tìm thấy loại vật tư
+                return NotFound();
+            }
+
+            // Kiểm tra xem loại vật tư có đang được sử dụng trong bảng VatTu không
+            var isLoaiVtUsedInVatTu = _context.VatTus.Any(vt => vt.MaLoai == id);
+
+            if (isLoaiVtUsedInVatTu)
+            {
+                // Nếu có vật tư đang sử dụng loại này, hiển thị thông báo
+                TempData["ErrorMessage"] = "Không thể xóa loại vật tư vì có vật tư đang sử dụng loại này.";
+                return RedirectToAction("Index");
+            }
+
+            return View(lvt); // Nếu không có vật tư nào sử dụng loại này, cho phép xóa
         }
 
 
         [HttpPost, ActionName("XoaLoaiVT")]
-        public IActionResult XoaLoaiVTPost(String id)
+        public IActionResult XoaLoaiVTPost(string id)
         {
             var lvt = _context.LoaiVts.Find(id);
+
             if (lvt == null)
             {
-                // Xử lý khi không tìm thấy LoaiVT
+                // Xử lý khi không tìm thấy loại vật tư
                 return NotFound();
             }
 
+            // Kiểm tra xem loại vật tư có đang được sử dụng trong bảng VatTu không
+            var isLoaiVtUsedInVatTu = _context.VatTus.Any(vt => vt.MaLoai == id);
+
+            if (isLoaiVtUsedInVatTu)
+            {
+                // Nếu có vật tư đang sử dụng loại này, hiển thị thông báo và không xóa
+                TempData["ErrorMessage"] = "Không thể xóa loại vật tư vì có vật tư đang sử dụng loại này.";
+                return RedirectToAction("Index");
+            }
+
+            // Nếu không có vật tư nào sử dụng loại này, thực hiện xóa loại vật tư
             _context.LoaiVts.Remove(lvt);
             _context.SaveChanges();
+
             return RedirectToAction("Index");
         }
+
+
+
 
         public IActionResult SuaLoaiVT(string id)
         {
@@ -87,13 +129,23 @@ namespace QLVT.Controllers
         [HttpPost]
         public IActionResult SuaLoaiVT(LoaiVt lvt)
         {
-            if (ModelState.IsValid)
+            var isDuplicate = _context.LoaiVts.Any(x => x.TenLoai == lvt.TenLoai && x.MaLoai != lvt.MaLoai);
+            if (isDuplicate)
             {
-                _context.LoaiVts.Update(lvt);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                ModelState.AddModelError("TenLoai", "Tên loại vật tư đã tồn tại, vui lòng nhập tên khác.");
             }
-            return View(lvt);
+
+            // Nếu ModelState không hợp lệ, trả về form sửa
+            if (!ModelState.IsValid)
+            {
+                return View(lvt);
+            }
+
+            // Cập nhật dữ liệu nếu không trùng
+            _context.Update(lvt);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        
         }
     }
 }
