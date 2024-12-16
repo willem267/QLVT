@@ -5,45 +5,46 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Quản lý loại vật tư</h1>
+@section Styles {
+    <link href="~/css/LoaiVT.css" rel="stylesheet" />
+}
 
-<p>
-    <a asp-action="formThemLoaiVT" class="btn btn-primary">Thêm</a>
-</p>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Quản lý loại vật tư</h1>
+        <a asp-action="formThemLoaiVT" class="btn btn-success">Thêm Loại Vật Tư</a>
+    </div>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
 
-<table class="table">
+<table>
     <thead>
         <tr>
-            <th>
-                Mã loại
-            </th>
-            <th>
-                Tên loại
-            </th>
-            <th>
-                Mô tả
-            </th>
-            <th></th>
+            <th>Mã loại</th>
+            <th>Tên loại</th>
+            <th>Mô tả</th>
+            <th>Thao tác</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.MaLoai)</td>
+                <td>@Html.DisplayFor(modelItem => item.TenLoai)</td>
+                <td>@Html.DisplayFor(modelItem => item.MoTa)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MaLoai)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TenLoai)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MoTa)
-                </td>
-                <td>
-                    <a asp-action="XoaLoaiVT" asp-route-id="@item.MaLoai" class="btn btn-primary">Xóa</a> |
-                    <a asp-action="" class="btn btn-primary">Sửa</a>
+                    <div style="display: flex; justify-content: center; gap: 10px;">
+                        <a asp-action="XoaLoaiVT" asp-route-id="@item.MaLoai" class="btn btn-danger">Xóa</a>
+                        <a asp-action="SuaLoaiVT" asp-route-id="@item.MaLoai" class="btn btn-warning">Sửa</a>
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+</div>

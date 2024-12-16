@@ -1,0 +1,51 @@
+﻿@model IEnumerable<QLVT.Models.Kho>
+
+@{
+    ViewData["Title"] = "Danh sách Kho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/css/Kho.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Quản lý Kho</h1>
+        <a asp-action="formThemKho" class="btn btn-success">Thêm Kho</a>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mã Kho</th>
+                <th>Tên Kho</th>
+                <th>Địa Chỉ</th>
+                <th>Thao Tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.MaKho)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TenKho)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                    <td>
+                        <div >
+                            <a asp-action="XoaKho" asp-route-id="@item.MaKho" class="btn btn-danger">Xóa</a>
+                            <a asp-action="SuaKho" asp-route-id="@item.MaKho" class="btn btn-warning">Sửa</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,84 @@
+﻿@model QLVT.Models.VatTu
+
+@{
+    ViewData["Title"] = "Thêm Vật Tư";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/css/VatTu.css" rel="stylesheet" />
+}
+
+<div class="form-container">
+    <div class="form-title">Thêm Vật Tư</div>
+    <form asp-action="Them" asp-controller="VatTu" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <div class="form-group">
+            <label asp-for="MaVt"></label>
+            <input asp-for="MaVt" class="form-control" placeholder="Nhập mã vật tư" />
+            <span asp-validation-for="MaVt" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TenVt"></label>
+            <input asp-for="TenVt" class="form-control" placeholder="Nhập tên vật tư" />
+            <span asp-validation-for="TenVt" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DonViTinh"></label>
+            <input asp-for="DonViTinh" class="form-control" placeholder="Nhập đơn vị tính" />
+            <span asp-validation-for="DonViTinh" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SoLuongTon"></label>
+            <input asp-for="SoLuongTon" class="form-control" placeholder="Nhập số lượng tồn" />
+            <span asp-validation-for="SoLuongTon" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DonGia"></label>
+            <input asp-for="DonGia" class="form-control" placeholder="Nhập đơn giá" />
+            <span asp-validation-for="DonGia" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MoTa"></label>
+            <textarea asp-for="MoTa" class="form-control" placeholder="Nhập mô tả" rows="3"></textarea>
+            <span asp-validation-for="MoTa" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MaLoai"></label>
+            <select asp-for="MaLoai" class="form-control" asp-items="ViewBag.MaLoaiOptions">
+                <option value="">-- Chọn Loại --</option>
+            </select>
+            <span asp-validation-for="MaLoai" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MaKho"></label>
+            <select asp-for="MaKho" class="form-control" asp-items="ViewBag.MaKhoOptions">
+                <option value="">-- Chọn Kho --</option>
+            </select>
+            <span asp-validation-for="MaKho" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MaTt"></label>
+            <select asp-for="MaTt" class="form-control" asp-items="ViewBag.MaTrangThaiOptions">
+                <option value="">-- Chọn Trạng Thái --</option>
+            </select>
+            <span asp-validation-for="MaTt" class="text-danger"></span>
+        </div>
+
+        <br />
+        <div class="button-group">
+            <input type="submit" value="Thêm" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Trở về danh sách</a>
+        </div>
+    </form>
+</div>
+

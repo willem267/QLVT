@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/QLVT.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/DangXuat.css" asp-append-version="true" />
-
+    @RenderSection("Styles", false)
 </head>
 <body>
     <header>
@@ -35,14 +35,6 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
-            @{
-                
-                string user = Context.Session.GetString("Nhanvien");
-
-            }
-            <h1>
-                Xin chào @user
-            </h1>
             @RenderBody()
         </main>
     </div>

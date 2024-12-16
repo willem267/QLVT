@@ -1,0 +1,56 @@
+﻿@model QLVT.Models.Kho
+
+@{
+    ViewData["Title"] = "Sửa Kho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Sửa thông tin kho</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="SuaKho">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <!-- Mã Kho -->
+                        <div class="form-group mb-3">
+                            <label asp-for="MaKho" class="control-label">Mã Kho</label>
+                            <input asp-for="MaKho" class="form-control" readonly />
+                            <span asp-validation-for="MaKho" class="text-danger"></span>
+                        </div>
+
+                        <!-- Tên Kho -->
+                        <div class="form-group mb-3">
+                            <label asp-for="TenKho" class="control-label">Tên Kho</label>
+                            <input asp-for="TenKho" class="form-control" placeholder="Nhập tên kho" />
+                            <span asp-validation-for="TenKho" class="text-danger"></span>
+                        </div>
+
+                        <!-- Địa Chỉ -->
+                        <div class="form-group mb-3">
+                            <label asp-for="DiaChi" class="control-label">Địa Chỉ</label>
+                            <input asp-for="DiaChi" class="form-control" placeholder="Nhập địa chỉ kho" />
+                            <span asp-validation-for="DiaChi" class="text-danger"></span>
+                        </div>
+
+                        <!-- Nút Submit và Trở về -->
+                        <div class="form-group d-flex justify-content-between">
+                            <input type="submit" value="Sửa Kho" class="btn btn-primary btn-lg" />
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">Trở Về Danh Sách</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

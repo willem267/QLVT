@@ -1,40 +1,40 @@
 ﻿@model QLVT.Models.LoaiVt
 
 @{
-    ViewData["Title"] = "XoaLoaiVT";
+    ViewData["Title"] = "Xóa Loại Vật Tư";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Bạn có chắc là muốn xóa không</h1>
+@section Styles {
+    <link href="~/css/LoaiVT.css" rel="stylesheet" />
+}
 
-<br />
 
-<div>
-    <h4>LoaiVt</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Mã loại
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MaLoai)
-        </dd>
-        <dt class="col-sm-2">
-            Tên loại
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TenLoai)
-        </dd>
-        <dt class="col-sm-2">
-            Mô tả
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-    </dl>
+<div class="delete-container">
+    <div class="delete-title">Xóa Loại Vật Tư</div>
 
-    <form asp-action="XoaLoaiVT" method="post" >
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index" class="btn btn-primary">Trở về danh sách</a>
+    <div class="delete-warning">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Bạn có chắc chắn muốn xóa loại vật tư này? Hành động này không thể hoàn tác!
+    </div>
+
+    <div class="delete-details">
+        <dl class="row">
+            <dt class="col-sm-4">Mã Loại:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MaLoai)</dd>
+
+            <dt class="col-sm-4">Tên Loại:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.TenLoai)</dd>
+
+            <dt class="col-sm-4">Mô Tả:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MoTa)</dd>
+        </dl>
+    </div>
+
+    <form asp-action="XoaLoaiVT" method="post">
+        <div class="button-group">
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-primary">Trở về danh sách</a>
+        </div>
     </form>
 </div>
