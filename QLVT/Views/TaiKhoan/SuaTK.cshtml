@@ -1,0 +1,83 @@
+﻿@model QLVT.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "SuaVT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Sửa thông tin tài khoản</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="SuaTK">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <!-- Mã Tài khoản -->
+                        <div class="form-group mb-3">
+                            <label asp-for="MaTk" class="control-label"></label>
+                            <input asp-for="MaTk" class="form-control" readonly />
+                            <span asp-validation-for="MaTk" class="text-danger"></span>
+                        </div>
+
+                        <!-- Tên đăng nhập -->
+                        <div class="form-group mb-3">
+                            <label asp-for="TenDn" class="control-label"></label>
+                            <input asp-for="TenDn" class="form-control"  />
+                            <span asp-validation-for="TenDn" class="text-danger"></span>
+                        </div>
+
+                        <!--Mật khẩu-->
+                        <div class="form-group mb-3">
+                            <label asp-for="Mk" class="control-label"></label>
+                            <input asp-for="Mk" class="form-control" placeholder="Nhập mật khẩu" />
+                            <span asp-validation-for="Mk" class="text-danger"></span>
+                        </div>
+
+                        <!-- Quyền -->
+
+                        <div class="form-group">
+                            <label asp-for="MaQ"></label>
+                            <select asp-for="MaQ" class="form-control" asp-items="ViewBag.QuyenList">
+                                <option value="">-- Chọn Quyền --</option>
+                            </select>
+                            <span asp-validation-for="MaQ" class="text-danger"></span>
+                        </div>
+
+                        <!--Người sử dụng-->
+                        <div class="form-group">
+                            <label>Nhân viên sử dụng</label>
+                            <select asp-for="MaNv" class="form-control" asp-items="ViewBag.NhanVienList">
+                                <option value="">-- Chọn Người sử dụng --</option>
+                            </select>
+                            <span asp-validation-for="MaNv" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <br />
+                        </div>
+
+                        <!-- Nút Submit và Trở về -->
+                        <div class="form-group d-flex justify-content-between">
+                            <input type="submit" value="Sửa" class="btn btn-primary btn-lg" />
+                            <a asp-action="Index" class="btn btn-secondary btn-lg">Trở Về</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

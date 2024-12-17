@@ -24,7 +24,7 @@ public partial class VatTu
 
     [Required(ErrorMessage = "Số lượng tồn không được bỏ trống")]
     [DisplayName("Số Lượng Tồn")]
-    [Range(0, 500, ErrorMessage = "số lượng chỉ được nhập không dưới 0 và quá 500")]
+    [Range(1, 500, ErrorMessage = "số lượng chỉ được nhập không dưới 0 và quá 500")]
     public int SoLuongTon { get; set; }
 
     [Required(ErrorMessage = "Mô tả không được bỏ trống")]

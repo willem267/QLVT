@@ -1,0 +1,52 @@
+﻿@model QLVT.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "XoaTK";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@section Styles {
+    <link href="~/css/VatTu.css" rel="stylesheet" />
+}
+
+<div class="delete-container">
+    <div class="delete-title">Xóa Vật Tư</div>
+
+    <div class="delete-warning">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Bạn có chắc chắn muốn xóa vật tư này? Hành động này không thể hoàn tác!
+    </div>
+
+    <div class="delete-details">
+        <dl class="row">
+            <dt class="col-sm-4">Mã Vật Tư:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MaTk)</dd>
+
+            <dt class="col-sm-4">Tên Vật Tư:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.TenDn)</dd>
+
+            <dt class="col-sm-4">Đơn Vị Tính:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.Mk)</dd>
+
+            <dt class="col-sm-4">Quyền</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MaQNavigation.TenQ)</dd>
+
+            <dt class="col-sm-4">Mô Tả:</dt>
+            <dd class="col-sm-8">@Html.DisplayFor(model => model.MaNvNavigation.Ten)</dd>
+
+        </dl>
+    </div>
+
+    <form asp-action="XoaTK" method="post">
+        <div class="button-group">
+            <input type="submit" value="Xóa" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-primary">Trở về danh sách</a>
+        </div>
+    </form>
+</div>

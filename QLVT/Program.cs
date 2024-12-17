@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using QLVT.Models;
 
@@ -17,6 +18,13 @@ builder.Services.AddSession(options =>
      options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";  // Đường dẫn tới trang đăng nhập
+        options.LogoutPath = "/Account/Logout"; // Đường dẫn tới logout
+    });
+
 
 var app = builder.Build();
 
@@ -32,7 +40,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthorization();
 app.UseAuthorization();
 
 app.UseSession();

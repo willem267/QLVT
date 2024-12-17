@@ -1,14 +1,51 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    @{
+<div class="container mt-4">
+    <h1>Dashboard </h1>
 
-        string user = Context.Session.GetString("Nhanvien");
+    <div class="row mt-4">
+        <!-- Khung Vật Tư -->
+        <div class="col-md-6">
+            <div class="card text-center bg-primary text-white">
+                <div class="card-body">
+                    <h2>@ViewBag.TotalVatTu</h2>
+                    <p>Tổng số loại vật tư</p>
+                </div>
+            </div>
+        </div>
 
-    }
-    <h1>
-        Xin chào @user
-    </h1>
+        <!-- Khung Loại Vật Tư -->
+        <div class="col-md-6">
+            <div class="card text-center bg-success text-white">
+                <div class="card-body">
+                    <h2>@ViewBag.TotalLoaiVatTu</h2>
+                    <p>Tổng số loại vật tư</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khung Tài Khoản -->
+        <div class="col-md-6">
+            <div class="card text-center bg-warning text-white">
+                <div class="card-body">
+                    <h2>@ViewBag.TotalTaiKhoan</h2>
+                    <p>Tổng số tài khoản</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khung Kho -->
+        <div class="col-md-6">
+            <div class="card text-center bg-info text-white">
+                <div class="card-body">
+                    <h2>@ViewBag.TotalKho</h2>
+                    <p>Tổng số kho</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
 </div>

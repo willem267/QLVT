@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLVT.Models;
@@ -6,6 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace QLVT.Controllers
 {
+    [Authorize]
     public class VatTuController : Controller
     {
         private readonly QlvtContext _context;

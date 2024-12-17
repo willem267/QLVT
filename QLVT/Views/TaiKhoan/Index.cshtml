@@ -1,0 +1,54 @@
+﻿@model IEnumerable<QLVT.Models.TaiKhoan>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link href="~/css/LoaiVT.css" rel="stylesheet" />
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4" >
+        <h1>Danh Sách Tài Khoản</h1>
+        <a asp-action="formThemTaiKhoan" class="btn btn-success">Thêm Tài Khoản</a>
+    </div>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <table>
+        <thead>
+            <tr>
+                <th>Mã tài khoản</th>
+                <th>Tên đăng nhập</th>
+                <th>Mật khẩu</th>
+                <th>Quyền</th>
+                <th>Người sử dụng</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaTk</td>
+                    <td>@item.TenDn</td>
+                    <td>@item.Mk</td>
+                    <td>@item.MaQNavigation.TenQ</td>
+                    <td>@($"{item.MaNvNavigation.Ho} {item.MaNvNavigation.TenDem} {item.MaNvNavigation.Ten}")</td>
+                  
+                    <td>
+                        <div style="display: flex; justify-content: center; gap: 10px;">
+                            <a asp-action="XoaTK" asp-route-id="@item.MaTk" class="btn btn-danger">Xóa</a>
+                            <a asp-action="SuaTK" asp-route-id="@item.MaTk" class="btn btn-warning">Sửa</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

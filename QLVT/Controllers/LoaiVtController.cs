@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QLVT.Models;
 using System.Text.RegularExpressions;
 
 namespace QLVT.Controllers
 {
-
+    [Authorize]
     public class LoaiVtController : Controller
     {
         private readonly QlvtContext _context;
